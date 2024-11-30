@@ -1,0 +1,83 @@
+.root{
+
+}
+body{
+    background-color: #000;
+
+}
+
+header{
+    color: white;
+}
+
+.main-img-container{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.main-img-container img{
+    border: 2px solid white;
+    border-radius: 15px;
+    box-shadow: 0px 0px 40px 10px white;
+    transition: 0.1s;
+}
+
+.main-txt-container{
+    visibility: hidden;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.main-txt-container a{
+    padding: 5vh 5vw;
+    border: 2px solid white;
+    box-shadow: 0px 0px 40px 10px white;
+    border-radius: 15px;
+    color: black;
+    text-decoration: none;
+    background-color: white;
+    font-size: 3em;
+}
+
+.guess-container{
+    margin-top: 10vh;
+    display: flex;
+    justify-content: center;
+}
+
+input{
+    font-size: 2em;
+    text-align: center;
+    border: 2px solid white;
+    box-shadow: 0px 0px 10px 3px white;
+    border-radius: 15px 0 0 15px;
+}
+
+button{
+    font-size: 2em;
+    text-align: center;
+    border: 2px solid white;
+    box-shadow: 0px 0px 10px 3px white;
+    border-radius: 0 15px 15px 0;
+
+}
+
+.filter{
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#525252",endColorstr="#000000",GradientType=1); 
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    filter: url(#noiseFilter);
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.main-img-container img:hover{
+    transform: scale(1.2);
+    z-index: 900;
+}
+
