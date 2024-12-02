@@ -1,50 +1,92 @@
-.root{
+@import url('https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&display=swap');
+
+html{
+    font-family: 'Athiti', sans-serif;
 
 }
 body{
     background-color: #000;
+    overflow: hidden;;
+    margin: 0;
 
 }
 
 header{
+    padding: 0 1em;
     color: white;
+
+
+}
+h1 {
+    padding: 0;
+    margin: 0;
 }
 
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 1em;
+    color: #7f7f7f;
+
+}
+
+a{ 
+    color: #9cd6f0
+}
+
+
 .main-img-container{
+    margin-top: 2vh;
     display: flex;
     justify-content: center;
     
 }
 
 .main-img-container img{
-    border: 2px solid white;
+    border: 2px solid #7f7f7f;
     border-radius: 15px;
-    box-shadow: 0px 0px 40px 10px white;
+    box-shadow: 0px 0px 60px 5px white;
     transition: 0.1s;
 }
 
-.main-txt-container{
-    visibility: hidden;;
+.main-img-container img:hover{
+    box-shadow: 0px 0px 100px 5px white;
+    transform: scale(1.2);
+    z-index: 900;
+}
+
+.answer-popup {
+    visibility: hidden;
+    visibility: visible;
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 999;
-}
-
-.main-txt-container a{
-    padding: 5vh 5vw;
+    padding: 2vh 5vw;
     border: 2px solid white;
     box-shadow: 0px 0px 40px 10px white;
     border-radius: 15px;
+    background-color: #7f7f7faa;
+    text-align: center;
+    backdrop-filter: blur(4px); 
+}
+
+#playAgain{
+    margin-top: 1em;
+    border-radius: 15px;
+
+}
+
+.main-txt-container a{
     color: black;
-    text-decoration: none;
-    background-color: white;
     font-size: 3em;
 }
 
+
 .guess-container{
-    margin-top: 10vh;
+    margin-top: 4vh;
     display: flex;
     justify-content: center;
 }
@@ -62,22 +104,43 @@ button{
     text-align: center;
     border: 2px solid white;
     box-shadow: 0px 0px 10px 3px white;
-    border-radius: 0 15px 15px 0;
+    background-color: #6bc5eb;
+    padding: 0.25em 0.5em;
+}
 
+button:hover{
+    background-color: #9cd6f0;
+}
+
+#guessButton{
+    border-radius: 0 15px 15px 0;
+    transition: 0.2s;
+}
+
+
+.error-popup{
+    visibility: hidden;
+    background-color: #e59191;
+    text-align: center;
+    transition: visibility 0.2s, opacity 0.2s linear;
+    opacity: 0;
+}
+
+.error-popup.show {
+    visibility: visible;
+    opacity: 1;
 }
 
 .filter{
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#525252",endColorstr="#000000",GradientType=1); 
     position: absolute;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#525252",endColorstr="#000000",GradientType=1); 
     width: 100vw;
-    height: 100vh;
+    height: 120vh;
     filter: url(#noiseFilter);
     opacity: 0.3;
     z-index: -1;
 }
 
-.main-img-container img:hover{
-    transform: scale(1.2);
-    z-index: 900;
-}
+
+
 

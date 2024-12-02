@@ -1,3 +1,47 @@
+import { getCountryFromText } from './countries.js';
+
+var resetCounter = 0;
+
+export function reset(){
+    let candidate;
+    const mainImgContainer = document.querySelector(".main-img-container");
+    const mainTxtContainer = document.querySelector(".main-txt-container");
+    const popup = document.querySelector('.answer-popup');
+    popup.style.visibility = 'hidden';
+    const existingImages = mainImgContainer.querySelectorAll("img");
+    existingImages.forEach(img => img.remove());
+    const existingAnchor = mainTxtContainer.querySelectorAll("a");
+    existingAnchor.forEach(a => a.remove());
+    
+    getCandidate().then(async (candidate) => {
+        if (candidate === undefined && resetCounter < 3) {
+            resetCounter++;
+            await delay(100);
+            reset();
+        } else {
+            resetCounter = 0;
+        }
+        const response = await fetch(candidate[0]);
+        const randomIndex = randomInt(10, 200);
+        await delay(randomIndex);
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const image = doc.querySelector("img");
+        const imageSrc = image.src;
+        const country = candidate[1];
+        const imageElement = document.createElement("img");
+        imageElement.src = imageSrc;
+        document.body.appendChild(imageElement);
+        mainImgContainer.appendChild(imageElement);
+        const countryElement = document.createElement("a");
+        countryElement.textContent = country;
+        countryElement.href = candidate[0];
+        mainTxtContainer.appendChild(countryElement);
+    });
+
+}
+
 const tag_filter = 
 [
     "tag-wildlife",
@@ -5,14 +49,10 @@ const tag_filter =
     "tag-close-up",
     "tag-underwater",
     "tag-artwork",
+    "tag-indoors",
+    "tag-interior"
+    
 ]
-
-var countries;
-fetch("countries.json")
-    .then((res) => res.json())
-    .then((data) => {
-        countries = data;
-});
 
 
 function randomInt(min,max) {
@@ -43,14 +83,11 @@ async function getCandidate() {
             }
         }
         if (unfiltered) {
-            for (let country of countries) {
-                if (description.includes(country)) {
-                    const candidate = articles[i].innerHTML.match(/https:\/\/windows10spotlight\.com\/images\/\S+?(?=")/);
-                    console.log(candidate);
-                    if (candidate) {
-                        candidates.push([candidate[0], country]);
-                    }
-                    break;
+            const country = getCountryFromText(description);
+            if (country){
+                const candidate = articles[i].innerHTML.match(/https:\/\/windows10spotlight\.com\/images\/\S+?(?=")/);
+                if (candidate) {
+                    candidates.push([candidate[0], country]);
                 }
             }
         }
@@ -62,26 +99,4 @@ async function getCandidate() {
     //return ["test2.html", "USA"];
 }
 
-var candidate;
-getCandidate().then(async (candidate) => {
-    const response = await fetch(candidate[0]);
-    const randomIndex = randomInt(10, 200);
-    await delay(randomIndex);
-    const html = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    console.log(doc);
-    const image = doc.querySelector("img");
-    const imageSrc = image.src;
-    const country = candidate[1];
-    const imageElement = document.createElement("img");
-    imageElement.src = imageSrc;
-    document.body.appendChild(imageElement);
-    const mainImgContainer = document.querySelector(".main-img-container");
-    const mainTxtContainer = document.querySelector(".main-txt-container");
-    mainImgContainer.appendChild(imageElement);
-    const countryElement = document.createElement("a");
-    countryElement.textContent = country;
-    countryElement.href = candidate[0];
-    mainTxtContainer.appendChild(countryElement);
-});
+reset();
