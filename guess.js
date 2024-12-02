@@ -53,16 +53,10 @@ function popUp(correct) {
     popup.style.visibility = 'visible';
 }
 
-function error() {
-
-
-}
-
 
 function playAgain() {
-
     const livesText = document.getElementById('lives');
     livesText.textContent = "Lives Left: 3";
-    lives = 0;
+    lives = 3;
     reset();
 }
