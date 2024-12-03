@@ -44,7 +44,8 @@ const tag_filter =
     "tag-underwater",
     "tag-artwork",
     "tag-indoors",
-    "tag-interior"
+    "tag-interior",
+    "tag-birds"
     
 ]
 

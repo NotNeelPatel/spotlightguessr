@@ -12,6 +12,11 @@ body{
 }
 
 header{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
     padding: 0 1em;
     color: white;
 
@@ -37,7 +42,7 @@ a{
 
 
 .main-img-container{
-    margin-top: 2vh;
+    margin: 2vh 0 6vh 0;;
     display: flex;
     justify-content: center;
     
@@ -48,7 +53,7 @@ a{
     border-radius: 15px;
     box-shadow: 0px 0px 60px 5px white;
     transition: 0.1s;
-    width: 60vw;
+    width: 58vw;
 }
 
 .main-img-container img:hover{
@@ -123,6 +128,15 @@ button:hover{
     transition: 0.2s;
 }
 
+#lives {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;;
+    color: #fff; 
+    font-size: 1.4em;
+}
 
 .error-popup{
     margin-left: auto;
@@ -151,6 +165,18 @@ button:hover{
     filter: url(#noiseFilter);
     opacity: 0.3;
     z-index: -1;
+}
+
+.shake{
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
 }
 
 @media screen and (max-width: 800px) {

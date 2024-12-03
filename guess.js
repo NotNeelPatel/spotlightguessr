@@ -27,6 +27,8 @@ function guessCountry() {
     let guess = inputContainer ? inputContainer.value : '';
     guess = getCountryFromText(guess);
 
+    const guessContainer = document.querySelector('.guess-container');
+
     if(!guess) {
         errorPopUp.style.visibility = 'visible';
         errorPopUp.style.opacity = '1';
@@ -34,6 +36,10 @@ function guessCountry() {
     } else if (guess === answer[1].trim()) {
         popUp(true);
     } else {
+        guessContainer.classList.add('shake');
+        setTimeout(() => {
+            guessContainer.classList.remove('shake');
+        }, 500);
         if (guessedCountries.includes(guess)) {
             errorPopUp.style.visibility = 'visible';
             errorPopUp.style.opacity = '1';
@@ -42,7 +48,8 @@ function guessCountry() {
         }
         guessedCountries.push(guess);
         lives--;
-        livesText.textContent = "Lives Left: " + lives;
+        livesText.textContent = "Lives: " + "♥️".repeat(lives);
+
         if (lives <= 0) {
             popUp(false);
         }
@@ -71,7 +78,7 @@ async function playAgain() {
     guessedCountries = [];
     inputBox.value = '';
     const livesText = document.getElementById('lives');
-    livesText.textContent = "Lives Left: 3";
+    livesText.textContent = "Lives: ♥️♥️♥️";
     lives = 3;
     answer = await reset();
     
