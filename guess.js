@@ -5,8 +5,13 @@ import { reset } from './script.js';
 document.getElementById('guessButton').addEventListener('click', guessCountry);
 document.getElementById('playAgain').addEventListener('click', playAgain);
 
+const inputBox = document.getElementById('guess');
+const popup = document.querySelector('.answer-popup');
+
 
 var lives = 3;
+var guessedCountries = [];
+
 function guessCountry() {
 
     const txtContainer = document.querySelector('.main-txt-container');
@@ -27,18 +32,23 @@ function guessCountry() {
     if(!guess) {
         errorPopUp.style.visibility = 'visible';
         errorPopUp.style.opacity = '1';
+        errorPopUp.textContent = "Error: Not in list of countries in this game";
     } else if (guess === answer.trim()) {
         popUp(true);
     } else {
+        if (guessedCountries.includes(guess)) {
+            errorPopUp.style.visibility = 'visible';
+            errorPopUp.style.opacity = '1';
+            errorPopUp.textContent = "Already Guessed " + guess;
+            return;
+        }
+        guessedCountries.push(guess);
         lives--;
         livesText.textContent = "Lives Left: " + lives;
         if (lives <= 0) {
             popUp(false);
         }
     }
-
-
-
 
 }
 
@@ -48,15 +58,28 @@ function popUp(correct) {
     ? "You Win! :) The country is "
     : "You Lose :( The country is ";
 
-    const popup = document.querySelector('.answer-popup');
     popup.insertBefore(answerText, popup.firstChild);
     popup.style.visibility = 'visible';
 }
 
 
 function playAgain() {
+    guessedCountries = [];
+    inputBox.value = '';
     const livesText = document.getElementById('lives');
     livesText.textContent = "Lives Left: 3";
     lives = 3;
     reset();
 }
+
+document.addEventListener("keypress", function(event) {
+    if (event.key !== "Enter") {
+        return;
+    }
+    event.preventDefault();
+    if (popup.style.visibility === 'visible') {
+        document.getElementById("playAgain").click();
+    } else {
+        document.getElementById("guessButton").click();
+    }
+});

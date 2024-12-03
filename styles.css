@@ -48,6 +48,7 @@ a{
     border-radius: 15px;
     box-shadow: 0px 0px 60px 5px white;
     transition: 0.1s;
+    width: 60vw;
 }
 
 .main-img-container img:hover{
@@ -84,15 +85,20 @@ a{
     font-size: 3em;
 }
 
+.bottom-container{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+
+}
 
 .guess-container{
-    margin-top: 4vh;
     display: flex;
     justify-content: center;
 }
 
 input{
-    font-size: 2em;
+    font-size: 1.8em;
     text-align: center;
     border: 2px solid white;
     box-shadow: 0px 0px 10px 3px white;
@@ -100,7 +106,7 @@ input{
 }
 
 button{
-    font-size: 2em;
+    font-size: 1.8em;
     text-align: center;
     border: 2px solid white;
     box-shadow: 0px 0px 10px 3px white;
@@ -119,11 +125,17 @@ button:hover{
 
 
 .error-popup{
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px;
+    font-size: 1.5em;
+    color: #e33737;
     visibility: hidden;
-    background-color: #e59191;
     text-align: center;
     transition: visibility 0.2s, opacity 0.2s linear;
     opacity: 0;
+    margin-top: 1em;
+    width: 60vw;
 }
 
 .error-popup.show {
@@ -141,6 +153,16 @@ button:hover{
     z-index: -1;
 }
 
+@media screen and (max-width: 800px) {
+    input{
+        font-size: 1.2em;
 
+    }
+    
+    button{
+        font-size: 1.2em;
+    }
+
+}
 
 
