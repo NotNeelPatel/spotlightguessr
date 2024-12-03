@@ -11,12 +11,10 @@ const popup = document.querySelector('.answer-popup');
 
 var lives = 3;
 var guessedCountries = [];
+var answer = await reset();
+
 
 function guessCountry() {
-
-    const txtContainer = document.querySelector('.main-txt-container');
-    const answer = txtContainer ? txtContainer.textContent: '';
-
     const livesText = document.getElementById('lives');
 
     const errorPopUp = document.querySelector('.error-popup');
@@ -33,7 +31,7 @@ function guessCountry() {
         errorPopUp.style.visibility = 'visible';
         errorPopUp.style.opacity = '1';
         errorPopUp.textContent = "Error: Not in list of countries in this game";
-    } else if (guess === answer.trim()) {
+    } else if (guess === answer[1].trim()) {
         popUp(true);
     } else {
         if (guessedCountries.includes(guess)) {
@@ -53,6 +51,12 @@ function guessCountry() {
 }
 
 function popUp(correct) {
+    const txtContainer = document.querySelector('.main-txt-container');
+    const countryElement = document.createElement("a");
+    countryElement.textContent = answer[1];
+    countryElement.href = answer[0];
+    txtContainer.appendChild(countryElement);
+
     const answerText = document.querySelector("h3");
     answerText.textContent = correct
     ? "You Win! :) The country is "
@@ -63,13 +67,14 @@ function popUp(correct) {
 }
 
 
-function playAgain() {
+async function playAgain() {
     guessedCountries = [];
     inputBox.value = '';
     const livesText = document.getElementById('lives');
     livesText.textContent = "Lives Left: 3";
     lives = 3;
-    reset();
+    answer = await reset();
+    
 }
 
 document.addEventListener("keypress", function(event) {
@@ -83,3 +88,4 @@ document.addEventListener("keypress", function(event) {
         document.getElementById("guessButton").click();
     }
 });
+

@@ -2,7 +2,7 @@ import { getCountryFromText } from './countries.js';
 
 var resetCounter = 0;
 
-export function reset(){
+export async function reset(){
     let candidate;
     const mainImgContainer = document.querySelector(".main-img-container");
     const mainTxtContainer = document.querySelector(".main-txt-container");
@@ -13,33 +13,27 @@ export function reset(){
     const existingAnchor = mainTxtContainer.querySelectorAll("a");
     existingAnchor.forEach(a => a.remove());
     
-    getCandidate().then(async (candidate) => {
-        if (candidate === undefined && resetCounter < 3) {
-            resetCounter++;
-            await delay(100);
-            reset();
-        } else {
-            resetCounter = 0;
-        }
-        const response = await fetch(candidate[0]);
-        const randomIndex = randomInt(10, 200);
-        await delay(randomIndex);
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const image = doc.querySelector("img");
-        const imageSrc = image.src;
-        const country = candidate[1];
-        const imageElement = document.createElement("img");
-        imageElement.src = imageSrc;
-        document.body.appendChild(imageElement);
-        mainImgContainer.appendChild(imageElement);
-        const countryElement = document.createElement("a");
-        countryElement.textContent = country;
-        countryElement.href = candidate[0];
-        mainTxtContainer.appendChild(countryElement);
-    });
-
+    candidate = await getCandidate();
+    if (candidate === undefined && resetCounter < 3) {
+        resetCounter++;
+        await delay(100);
+        return reset();
+    } else {
+        resetCounter = 0;
+    }
+    const response = await fetch(candidate[0]);
+    const randomIndex = randomInt(10, 200);
+    await delay(randomIndex);
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const image = doc.querySelector("img");
+    const imageSrc = image.src;
+    const imageElement = document.createElement("img");
+    imageElement.src = imageSrc;
+    document.body.appendChild(imageElement);
+    mainImgContainer.appendChild(imageElement);
+    return candidate;
 }
 
 const tag_filter = 
@@ -98,5 +92,3 @@ async function getCandidate() {
     
     //return ["test2.html", "USA"];
 }
-
-reset();
