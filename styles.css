@@ -1,69 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&display=swap");
 
-html{
-    font-family: 'Athiti', sans-serif;
-
+html {
+    font-family: "Athiti", sans-serif;
 }
-body{
+body {
     background-color: #000;
-    overflow: hidden;;
+    overflow: hidden;
     margin: 0;
-
 }
 
-header{
+header {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
-    grid-row-gap: 0px; 
+    grid-row-gap: 0px;
     padding: 0 1em;
     color: white;
-
-
 }
 h1 {
     padding: 0;
     margin: 0;
 }
 
-footer{
+footer {
     position: absolute;
     bottom: 0;
     left: 0;
     padding: 1em;
     color: #7f7f7f;
-
 }
 
-a{ 
-    color: #9cd6f0
+a {
+    color: #9cd6f0;
 }
 
-
-.main-img-container{
-    margin: 2vh 0 6vh 0;;
+.main-img-container {
+    margin: 2vh 0 6vh 0;
     display: flex;
     justify-content: center;
-    
 }
 
-.main-img-container img{
+.main-img-container img {
     border: 2px solid #7f7f7f;
     border-radius: 15px;
-    box-shadow: 0px 0px 60px 5px white;
+
     transition: 0.1s;
     width: 58vw;
-}
-
-.main-img-container img:hover{
-    box-shadow: 0px 0px 100px 5px white;
-    transform: scale(1.2);
-    z-index: 900;
+    z-index: 999;
 }
 
 .answer-popup {
-    visibility: hidden;
     visibility: visible;
     position: absolute;
     top: 30%;
@@ -72,58 +59,53 @@ a{
     z-index: 999;
     padding: 2vh 5vw;
     border: 2px solid white;
-    box-shadow: 0px 0px 40px 10px white;
     border-radius: 15px;
     background-color: #7f7f7faa;
     text-align: center;
-    backdrop-filter: blur(4px); 
+    backdrop-filter: blur(4px);
 }
 
-#playAgain{
+#playAgain {
     margin-top: 1em;
     border-radius: 15px;
-
 }
 
-.main-txt-container a{
+.main-txt-container a {
     color: black;
     font-size: 3em;
 }
 
-.bottom-container{
+.bottom-container {
     margin-left: auto;
     margin-right: auto;
     margin-top: 2vh;
-
 }
 
-.guess-container{
+.guess-container {
     display: flex;
     justify-content: center;
 }
 
-input{
+input {
     font-size: 1.8em;
     text-align: center;
     border: 2px solid white;
-    box-shadow: 0px 0px 10px 3px white;
     border-radius: 15px 0 0 15px;
 }
 
-button{
+button {
     font-size: 1.8em;
     text-align: center;
     border: 2px solid white;
-    box-shadow: 0px 0px 10px 3px white;
     background-color: #6bc5eb;
     padding: 0.25em 0.5em;
 }
 
-button:hover{
+button:hover {
     background-color: #9cd6f0;
 }
 
-#guessButton{
+#guessButton {
     border-radius: 0 15px 15px 0;
     transition: 0.2s;
 }
@@ -133,12 +115,12 @@ button:hover{
     margin: 0;
     display: flex;
     align-items: center;
-    justify-content: center;;
-    color: #fff; 
+    justify-content: center;
+    justify-content: center;
     font-size: 1.4em;
 }
 
-.error-popup{
+.error-popup {
     margin-left: auto;
     margin-right: auto;
     border-radius: 4px;
@@ -157,9 +139,9 @@ button:hover{
     opacity: 1;
 }
 
-.filter{
+.filter {
     position: absolute;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#525252",endColorstr="#000000",GradientType=1); 
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#525252",endColorstr="#000000",GradientType=1);
     width: 100vw;
     height: 120vh;
     filter: url(#noiseFilter);
@@ -167,28 +149,34 @@ button:hover{
     z-index: -1;
 }
 
-.shake{
+.shake {
     animation: shake 0.5s;
 }
 
 @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    50% { transform: translateX(10px); }
-    75% { transform: translateX(-10px); }
-    100% { transform: translateX(0); }
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    75% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 @media screen and (max-width: 800px) {
-    input{
-        font-size: 1.2em;
-
-    }
-    
-    button{
+    input {
         font-size: 1.2em;
     }
 
+    button {
+        font-size: 1.2em;
+    }
 }
-
-

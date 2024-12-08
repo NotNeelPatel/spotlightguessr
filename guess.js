@@ -1,98 +1,107 @@
-import { getCountryFromText } from './countries.js';
-import { reset } from './script.js';
+import { getCountryFromText } from "./countries.js";
+import { getEmojiFromCountry } from "./countries.js";
+import { reset } from "./script.js";
 
+document.getElementById("guessButton").addEventListener("click", guessCountry);
+document.getElementById("playAgain").addEventListener("click", playAgain);
 
-document.getElementById('guessButton').addEventListener('click', guessCountry);
-document.getElementById('playAgain').addEventListener('click', playAgain);
+const inputBox = document.getElementById("guess");
+const popup = document.querySelector(".answer-popup");
+const livesText = document.getElementById("lives");
 
-const inputBox = document.getElementById('guess');
-const popup = document.querySelector('.answer-popup');
-
-
-var lives = 3;
-var guessedCountries = [];
-var answer = await reset();
-
+let lives = 3;
+let guessedCountries = new Set();
+let answer = await reset();
 
 function guessCountry() {
-    const livesText = document.getElementById('lives');
+    // Prevent unwanted behaviour for popups
+    if (popup.style.visibility === "visible") {
+        return;
+    }
+    setErrorPopUp();
 
-    const errorPopUp = document.querySelector('.error-popup');
-    if (errorPopUp.style.visibility === 'visible') {
-        errorPopUp.style.visibility = 'hidden';
-        errorPopUp.style.opacity = '0'; 
-    } 
+    let userGuess = inputBox ? inputBox.value : "";
+    userGuess = getCountryFromText(userGuess);
 
-    const inputContainer = document.getElementById('guess');
-    let guess = inputContainer ? inputContainer.value : '';
-    guess = getCountryFromText(guess);
+    const guessContainer = document.querySelector(".guess-container");
 
-    const guessContainer = document.querySelector('.guess-container');
-
-    if(!guess) {
-        errorPopUp.style.visibility = 'visible';
-        errorPopUp.style.opacity = '1';
-        errorPopUp.textContent = "Error: Not in list of countries in this game";
-    } else if (guess === answer[1].trim()) {
+    if (userGuess === answer[1].trim()) {
         popUp(true);
     } else {
-        guessContainer.classList.add('shake');
+        // Shake animation
+        guessContainer.classList.add("shake");
         setTimeout(() => {
-            guessContainer.classList.remove('shake');
+            guessContainer.classList.remove("shake");
         }, 500);
-        if (guessedCountries.includes(guess)) {
-            errorPopUp.style.visibility = 'visible';
-            errorPopUp.style.opacity = '1';
-            errorPopUp.textContent = "Already Guessed " + guess;
+
+        if (!userGuess) {
+            setErrorPopUp("Error: Not in list of countries in this game");
             return;
         }
-        guessedCountries.push(guess);
+
+        if (guessedCountries.has(userGuess)) {
+            setErrorPopUp("Already Guessed " + userGuess);
+            return;
+        }
+
+        guessedCountries.add(userGuess);
         lives--;
         livesText.textContent = "Lives: " + "♥️".repeat(lives);
 
         if (lives <= 0) {
+            // User loses
             popUp(false);
         }
     }
-
 }
 
-function popUp(correct) {
-    const txtContainer = document.querySelector('.main-txt-container');
+function popUp(userWon) {
+    const txtContainer = document.querySelector(".main-txt-container");
     const countryElement = document.createElement("a");
-    countryElement.textContent = answer[1];
+
+    countryElement.textContent = getEmojiFromCountry(answer[1]) + " " + answer[1];
     countryElement.href = answer[0];
     txtContainer.appendChild(countryElement);
 
     const answerText = document.querySelector("h3");
-    answerText.textContent = correct
-    ? "You Win! :) The country is "
-    : "You Lose :( The country is ";
+    answerText.textContent = userWon
+        ? "You Win! :) The country is "
+        : "You Lose :( The country is ";
 
     popup.insertBefore(answerText, popup.firstChild);
-    popup.style.visibility = 'visible';
+    popup.style.visibility = "visible";
 }
 
+function setErrorPopUp(message = "") {
+    const container = document.querySelector(".error-popup");
+
+    if (container.style.visibility === "visible" && message === "") {
+        container.style.visibility = "hidden";
+        container.style.opacity = "0";
+        return;
+    }
+
+    container.style.visibility = "visible";
+    container.style.opacity = "1";
+    container.textContent = message;
+}
 
 async function playAgain() {
-    guessedCountries = [];
-    inputBox.value = '';
-    const livesText = document.getElementById('lives');
+    guessedCountries.clear();
+    inputBox.value = "";
     livesText.textContent = "Lives: ♥️♥️♥️";
     lives = 3;
     answer = await reset();
-    
 }
 
-document.addEventListener("keypress", function(event) {
+document.addEventListener("keypress", function (event) {
     if (event.key !== "Enter") {
         return;
     }
     event.preventDefault();
-    if (popup.style.visibility === 'visible') {
+    if (popup.style.visibility === "visible") {
         document.getElementById("playAgain").click();
     } else {
         document.getElementById("guessButton").click();
     }
 });
-
