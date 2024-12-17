@@ -7,28 +7,43 @@ fetch("./countries.json")
     });
 
 export function getCountryFromText(description) {
-    let matches = [];
+    /*
+     * This is a bulky solution but it works...
+     * TODO: improve this function
+     */
     const countryNames = Object.keys(countries);
+    description = description.toLowerCase();
+    let matches = [];
     for (let country of countryNames) {
-        if (description.toLowerCase().includes(country.toLowerCase())) {
+        if (description.includes(" " + country.toLowerCase())) {
             matches.push(country);
         }
     }
-    if (matches.length === 1) return matches[0];
-    if (matches.length === 0) return "";
-    for (let country of matches) {
-        if (description.toLowerCase().includes(" " + country.toLowerCase())) {
-            return country;
+    if (matches.length === 0) {
+        return "";
+    } else if (matches.length === 1) {
+        return matches[0];
+    } else {
+        let furthestCountry = matches[0];
+        let furthestIndex = description.lastIndexOf(matches[0].toLowerCase());
+
+        for (let i = 1; i < matches.length; i++) {
+            let currentIndex = description.lastIndexOf(matches[i].toLowerCase());
+            if (currentIndex > furthestIndex) {
+                furthestCountry = matches[i];
+                furthestIndex = currentIndex;
+            }
         }
+
+        return furthestCountry;
     }
-    return "";
 }
 
 // taken from https://www.bqst.fr/country-code-to-flag-emoji/
 export function getEmojiFromCountry(country) {
     let countryCode = countries[country];
     const codePoints = countryCode
-        .split('')
-        .map((char) => 127397 + char.charCodeAt(0))
-    return String.fromCodePoint(...codePoints)
+        .split("")
+        .map((char) => 127397 + char.charCodeAt(0));
+    return String.fromCodePoint(...codePoints);
 }

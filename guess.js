@@ -20,7 +20,7 @@ function guessCountry() {
     }
     setErrorPopUp();
 
-    let userGuess = inputBox ? inputBox.value : "";
+    let userGuess = inputBox ? " " + inputBox.value : "";
     userGuess = getCountryFromText(userGuess);
 
     const guessContainer = document.querySelector(".guess-container");

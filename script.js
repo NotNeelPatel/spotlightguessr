@@ -72,7 +72,7 @@ async function getCandidate() {
      * and individual images cannot be easily found
      * as the URLs do not nicely increment as one might suspect.
      */
-    var randomIndex = randomInt(0, 1181);
+    var randomIndex = randomInt(0, 1185);
     const response = await fetch(
         `https://windows10spotlight.com/page/${randomIndex}`
     );
